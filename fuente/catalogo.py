@@ -108,9 +108,11 @@ def site_cat(src, prefix_letter):
             'aretes': 'aretes', 'dijes': 'dijes', 'anillos': 'anillos', 'tobilleras': 'tobilleras', 'conjuntos': 'conjuntos',
             'religiosos': 'rosarios-y-cruceros'}.get(src) or ('aretes' if prefix_letter == 'A' else 'dijes')
 
+FE_ESTRICTO = ['san benito', 'benito', 'benedictus', 'virgen', 'guadalupe', 'guadalupana', 'milagrosa', 'immaculata', 'carmen', 'fatima', 'fátima', 'rosa mistica', 'señora', 'maría']
+
 def tags_for(name, cat):
     low = name.lower(); tags = []
-    if any(k in low for k in FE): tags.append('fe')
+    if any(k in low for k in FE_ESTRICTO) and 'mano de' not in low: tags.append('fe')
     if any(k in low for k in AMOR): tags.append('amor')
     if any(k in low for k in BRILLO): tags.append('brillo')
     if 'italiana' in low: tags.append('italiana')
@@ -197,7 +199,7 @@ def build():
         p['tags'] = tags_for(p['nombre'], p['cat']) + (['casa-orus'] if p['propio'] else [])
         if p['propio']:
             p['tags'] += ['hecho-a-mano']
-            if any(k in p['nombre'].lower() for k in ['benito', 'guadalupe', 'divino', 'roja']): p['tags'].append('fe')
+            if any(k in p['nombre'].lower() for k in ['benito', 'guadalupe']): p['tags'].append('fe')
         p['medidas'] = medidas(p['nombre'])
         p['desc'] = (p['nombre'] + ' en oro laminado 18k, hecha a mano por Casa Orus en Medellín. ' + p['desc_propia']) if p['propio'] else describe(p['nombre'], p['cat'], p['ref'])
     slugs = [p['slug'] for p in prods]

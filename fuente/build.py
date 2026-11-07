@@ -38,8 +38,8 @@ PICT = {
 CAT_IMG = {}  # se rellena con la primera pieza con foto de cada categoría
 
 # ---------------------------------------------------------------- plantillas
-NAV = [('Colección', '/coleccion/'), ('Manillas', '/coleccion/manillas-y-pulseras/'), ('Cadenas', '/coleccion/cadenas-y-gargantillas/'),
-       ('Aretes', '/coleccion/aretes/'), ('Dijes', '/coleccion/dijes/'), ('Fe y protección', '/coleccion/fe-y-proteccion/'),
+NAV = [('Inicio', '/'), ('Colección', '/coleccion/'), ('Manillas', '/coleccion/manillas-y-pulseras/'), ('Cadenas', '/coleccion/cadenas-y-gargantillas/'),
+       ('Aretes', '/coleccion/aretes/'), ('Dijes', '/coleccion/dijes/'),
        ('Casa Orus', '/creaciones/'), ('Historia', '/nuestra-historia/'), ('Guías', '/guias/')]
 
 def head(title, desc, path, og_img='/assets/img/og-casa-orus.png', schema=None, noindex=False, typ='website'):
@@ -206,14 +206,14 @@ def page_fe(P):
     chips = ''.join(f'<button class="chip" type="button" data-f="{c[0]}" aria-pressed="false">{c[2]}</button>' for c in CATS if any(p['cat'] == c[0] for p in fe))
     grid = ''.join(card(p, i > 7) for i, p in enumerate(sorted(fe, key=lambda p: (not p['propio'], p['cat'], p['nombre']))))
     faqs = [('¿Qué significa la medalla de San Benito?', 'Es una de las medallas de protección más antiguas de la tradición católica; quienes la llevan la asocian con la protección frente al mal.'),
-            ('¿Por qué se usa hilo rojo?', 'En muchas culturas el hilo rojo se lleva como amuleto de protección. En Casa Orus lo tejemos a mano y lo combinamos con oro laminado.'),
-            ('¿Son buen regalo de primera comunión o bautizo?', 'Sí. Medallas, cruces y manillas de protección son de los regalos más elegidos para estas fechas.')]
+            ('¿Qué representa la Virgen de Guadalupe?', 'Es una de las advocaciones marianas más queridas en Latinoamérica; su medalla se lleva como símbolo de fe, amor y protección.'),
+            ('¿Son buen regalo de primera comunión o bautizo?', 'Sí. Las medallas de la Virgen y las manillas de San Benito son de los regalos más elegidos para estas fechas.')]
     body = f'''<section class="cab-cat noche" style="padding-bottom:56px"><div class="contenedor">{migas(items)}<span class="eyebrow">Colección especial</span>
-<h1>Fe y protección <span class="oro">en oro laminado</span></h1><p class="lead">Manillas de San Benito y de hilo rojo, medallas de la Virgen de Guadalupe y la Milagrosa, Divino Niño, cruces y amuletos. Para llevar tu fe contigo, todos los días.</p></div></section>
+<h1>Fe y protección <span class="oro">en oro laminado</span></h1><p class="lead">Solo piezas de San Benito y de la Virgen: Guadalupe, Milagrosa, del Carmen, de Fátima y Rosa Mística, en manillas, medallas, cruceros y aretes. Para llevar tu fe contigo, todos los días.</p></div></section>
 <section class="contenedor" style="padding:46px 24px 90px"><div class="filtros" role="group" aria-label="Filtrar"><button class="chip" type="button" data-f="todo" aria-pressed="true">Todas</button>{chips}</div>
 <p class="contador" id="contador" aria-live="polite"></p><div class="grid" id="lista">{grid}</div>
-<div class="texto-cat"><h2>Joyería de fe hecha para el día a día</h2><p>Las piezas de protección son las que más acompañan a nuestros clientes: una manilla de San Benito que no se quitan, una medalla de la Virgen de Guadalupe heredada en espíritu, una cruz para un nuevo comienzo. Por eso las hacemos en oro laminado 18k, resistente al uso diario y con 5 años de garantía en el color.</p><h2 style="margin-top:40px">Preguntas frecuentes</h2>{faq_html(faqs)}</div></section>'''
-    write('/coleccion/fe-y-proteccion/', head('Manillas y Medallas de Protección en Oro Laminado | San Benito, Guadalupe | Casa Orus', 'Manillas de San Benito, hilo rojo, medallas de la Virgen de Guadalupe, Divino Niño y cruces en oro laminado 18k, hechas en Medellín. 5 años de garantía.', '/coleccion/fe-y-proteccion/', schema=[bc_schema(items), faq_schema(faqs)]) + body + foot())
+<div class="texto-cat"><h2>Joyería de fe hecha para el día a día</h2><p>Las piezas de protección son las que más acompañan a nuestros clientes: una manilla de San Benito que no se quitan, una medalla de la Virgen de Guadalupe o de la Milagrosa que acompaña cada paso. Por eso las hacemos en oro laminado 18k, resistente al uso diario y con 5 años de garantía en el color.</p><h2 style="margin-top:40px">Preguntas frecuentes</h2>{faq_html(faqs)}</div></section>'''
+    write('/coleccion/fe-y-proteccion/', head('Manillas y Medallas de Protección en Oro Laminado | San Benito, Guadalupe | Casa Orus', 'Manillas y medallas de San Benito y de la Virgen de Guadalupe, la Milagrosa y del Carmen en oro laminado 18k, hechas en Medellín. 5 años de garantía.', '/coleccion/fe-y-proteccion/', schema=[bc_schema(items), faq_schema(faqs)]) + body + foot())
 
 def page_producto(p, P):
     c = CAT[p['cat']]
@@ -292,7 +292,7 @@ def page_home(P):
 <div class="grid" style="margin-top:34px">{''.join(card(p) for p in destacados)}</div></div></section>
 <section class="seccion noche"><div class="contenedor dos">
 <div><span class="eyebrow">Colección especial</span><h2>Fe y <span class="oro">protección</span></h2>{sep()}
-<p class="lead">Manillas de San Benito y de hilo rojo tejidas a mano, medallas de la Virgen de Guadalupe, el Divino Niño y cruces en oro laminado. Para llevar tu fe contigo, todos los días.</p>
+<p class="lead">Manillas y medallas de San Benito, la Virgen de Guadalupe, la Milagrosa y la Virgen del Carmen en oro laminado 18k. Para llevar tu fe contigo, todos los días.</p>
 <div class="botones"><a class="btn btn-oro" href="/coleccion/fe-y-proteccion/">Ver fe y protección</a></div></div>
 <div class="grid" style="grid-template-columns:repeat(2,1fr)">{''.join(card(p) for p in fe)}</div></div></section>
 <section class="seccion"><div class="contenedor dos">
@@ -380,7 +380,7 @@ def build_pages(P):
     simple('/preguntas-frecuentes/', 'Preguntas Frecuentes sobre Oro Laminado | Casa Orus', 'Resolvemos tus dudas sobre el oro laminado 18k, la garantía, los envíos, los pedidos y las piezas personalizadas de Casa Orus.',
            'Ayuda', 'Preguntas <span class="oro">frecuentes</span>', f'<section class="contenedor" style="padding-bottom:90px"><div class="faq" style="margin-top:0">{faq_html(FAQ_GEN)}</div></section>', schema=[faq_schema(FAQ_GEN)])
     # Regalos
-    occ = [('Para el amor', 'amor', 'Corazones, iniciales y piezas para regalar a tu pareja.'), ('Fe y protección', 'fe', 'Primera comunión, bautizo, confirmación o un nuevo comienzo.'), ('Con brillo', 'brillo', 'Piezas con circonias para una ocasión especial.'), ('Hechas a mano', 'casa-orus', 'Creaciones únicas tejidas en nuestro taller.')]
+    occ = [('Para el amor', 'amor', 'Corazones, iniciales y piezas para regalar a tu pareja.'), ('Fe y protección', 'fe', 'San Benito y la Virgen, para primera comunión, bautizo o confirmación.'), ('Con brillo', 'brillo', 'Piezas con circonias para una ocasión especial.'), ('Hechas a mano', 'casa-orus', 'Creaciones únicas tejidas en nuestro taller.')]
     blocks = ''
     for t, tag, d in occ:
         ps = [p for p in P if tag in p['tags']][:8]
