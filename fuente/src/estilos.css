@@ -219,3 +219,4 @@ details.acord p,details.acord ul{font-size:14.5px;color:var(--tinta-suave)}
 .noche .card,.noche .card:hover{color:var(--tinta)}
 .noche .card .ref{color:var(--tinta-suave)}
 .arco-foto>img{position:absolute;inset:0;z-index:1}
+[hidden]{display:none!important}
