@@ -1,0 +1,69 @@
+# Casa Orus · configuración Apache (Hostinger)
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+# Forzar HTTPS y dominio sin www
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^(.*)$ https://orusjoyeria.com/$1 [L,R=301]
+
+# Redirecciones de la web anterior
+Redirect 301 /shop https://orusjoyeria.com/coleccion/
+Redirect 301 /collection https://orusjoyeria.com/coleccion/
+Redirect 301 /gallery https://orusjoyeria.com/creaciones/
+Redirect 301 /about https://orusjoyeria.com/nuestra-historia/
+Redirect 301 /contact https://orusjoyeria.com/contacto/
+Redirect 301 /shop/manillas https://orusjoyeria.com/coleccion/manillas-y-pulseras/
+Redirect 301 /shop/cadenas https://orusjoyeria.com/coleccion/cadenas-y-gargantillas/
+Redirect 301 /shop/aretes https://orusjoyeria.com/coleccion/aretes/
+Redirect 301 /shop/anillos https://orusjoyeria.com/coleccion/anillos/
+Redirect 301 /shop/otros https://orusjoyeria.com/coleccion/
+Redirect 301 /category/Anillos https://orusjoyeria.com/coleccion/anillos/
+Redirect 301 /category/Cadenas https://orusjoyeria.com/coleccion/cadenas-y-gargantillas/
+Redirect 301 /category/Aretes https://orusjoyeria.com/coleccion/aretes/
+Redirect 301 /category/Manillas%20Tejidas https://orusjoyeria.com/coleccion/manillas-y-pulseras/
+Redirect 301 /product/anillo-tejido-balin-liso1 https://orusjoyeria.com/joya/anillo-tejido-balin-liso-4mm/
+Redirect 301 /product/anillo-tejido-balin-liso https://orusjoyeria.com/joya/anillo-tejido-balines-4mm/
+Redirect 301 /product/anillo-tejido-balines-italy https://orusjoyeria.com/joya/anillo-tejido-balines-italianos/
+Redirect 301 /product/manilla-oso-t-balines- https://orusjoyeria.com/joya/manilla-oso-balines/
+Redirect 301 /product/manilla-verde-herraje-bola-de-fuego https://orusjoyeria.com/joya/manilla-verde-bola-de-fuego/
+Redirect 301 /product/manilla-roja-tejida-balines https://orusjoyeria.com/joya/manilla-roja-tejida-balines/
+Redirect 301 /product/manilla-tejida-chakras-trebol https://orusjoyeria.com/joya/manilla-chakras-trebol/
+Redirect 301 /product/manilla-virgen-de-guadalupe https://orusjoyeria.com/joya/manilla-virgen-de-guadalupe/
+Redirect 301 /product/manilla-placa-personalizada https://orusjoyeria.com/joya/manilla-placa-personalizada/
+Redirect 301 /product/face-serum-gxrcld https://orusjoyeria.com/joya/manilla-divino-nino/
+Redirect 301 /product/handmade-vase-slowpy https://orusjoyeria.com/joya/manilla-balin-liso-4mm/
+Redirect 301 /product/set-of-plates-cxlzwx https://orusjoyeria.com/joya/manilla-lotus/
+Redirect 301 /product/sunglasses-iubjnq https://orusjoyeria.com/joya/manilla-san-benito/
+Redirect 301 /product/anillo-alianza-t55 https://orusjoyeria.com/joya/anillo-alianza-t5-5-13009-t5-5/
+Redirect 301 /product/anillo-flicker-ajustable https://orusjoyeria.com/joya/anillo-flicker-ajustable-13102/
+RedirectMatch 301 ^/product/.*$ https://orusjoyeria.com/coleccion/
+
+# Caché y compresión
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType text/css "access plus 1 year"
+ExpiresByType application/javascript "access plus 1 year"
+ExpiresByType font/woff "access plus 1 year"
+ExpiresByType image/svg+xml "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+ExpiresByType image/webp "access plus 1 year"
+ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/xml text/plain application/json
+</IfModule>
+
+# Cabeceras de seguridad
+<IfModule mod_headers.c>
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+</IfModule>
+AddType font/woff .woff
+AddType application/manifest+json .webmanifest
