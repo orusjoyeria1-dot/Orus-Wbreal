@@ -99,7 +99,7 @@ def foot():
 <div><h4>Casa Orus</h4><ul><li><a href="/nuestra-historia/">Nuestra historia</a></li><li><a href="/creaciones/">Creaciones Casa Orus</a></li><li><a href="/regalos/">Regalos</a></li><li><a href="/guias/">Guías</a></li><li><a href="/aliados/">Aliados y mayoristas</a></li></ul></div>
 <div><h4>Atención</h4><ul><li><a href="{wa('Hola Casa Orus ✨')}" rel="noopener">WhatsApp +57 314 272 0023</a></li><li><a href="mailto:{EMAIL}">{EMAIL}</a></li><li><a href="/garantia-y-cuidados/">Garantía y cuidados</a></li><li><a href="/preguntas-frecuentes/">Preguntas frecuentes</a></li><li><a href="/contacto/">Contacto</a></li></ul></div>
 </div>
-<div class="pie-base"><span>© {datetime.date.today().year} Casa Orus · Joyería que trasciende · Medellín, Colombia</span><span><a href="/privacidad/">Política de privacidad</a></span></div>
+<div class="pie-base"><span>© {datetime.date.today().year} Casa Orus · Joyería que trasciende · Medellín, Colombia</span><span><a href="/politica-de-devoluciones/">Devoluciones y cambios</a> · <a href="/privacidad/">Política de privacidad</a></span></div>
 </div></footer>
 <a class="wa-flotante" href="{wa('Hola Casa Orus ✨ quiero información sobre sus joyas.')}" aria-label="Escríbenos por WhatsApp" rel="noopener">{ICON['wa']}</a>
 <script src="/assets/js/sitio.js?v={HOY}" defer></script>
@@ -482,6 +482,14 @@ def build_pages(P):
 <div class="pilar"><div class="medallon">{ICON['ig']}</div><h3>Instagram</h3><p><a href="{IG}" rel="noopener">@casa.orus</a></p></div>
 <div class="pilar"><div class="medallon">{PICT['envio']}</div><h3>Correo</h3><p><a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div></section>''', schema=[ORG])
     # Privacidad
+    simple('/politica-de-devoluciones/', 'Política de Devoluciones y Cambios | Casa Orus', 'Cambios en 15 días, derecho de retracto de 5 días hábiles y devoluciones por defecto. Así funcionan las devoluciones en Casa Orus, joyería en oro laminado 18k.', 'Legal', 'Política de <span class="oro">devoluciones y cambios</span>',
+           '''<section class="articulo" style="padding-top:0"><p>Queremos que ames tu joya. Si no es así, aquí te explicamos cómo cambiarla o devolverla. Esta política aplica a todas las compras hechas en orusjoyeria.com, por WhatsApp o por Instagram, con envío a cualquier lugar de Colombia.</p>
+<h2>1. Cambios</h2><p>Puedes cambiar tu pieza por otra de igual o mayor valor (pagando la diferencia) dentro de los <strong>15 días calendario</strong> siguientes a la entrega, siempre que:</p><ul><li>La joya no haya sido usada, alterada ni ajustada.</li><li>Esté en perfecto estado, con su empaque original y etiqueta.</li><li>Presentes el comprobante de compra o el chat del pedido.</li></ul>
+<h2>2. Derecho de retracto (devolución de dinero)</h2><p>Como toda compra a distancia en Colombia, tienes derecho a retractarte dentro de los <strong>5 días hábiles</strong> siguientes a la entrega, de acuerdo con el artículo 47 de la Ley 1480 de 2011 (Estatuto del Consumidor). La pieza debe estar sin uso y en las mismas condiciones en que la recibiste. Los costos de transporte de la devolución corren por tu cuenta, y te reembolsamos el valor pagado dentro de los <strong>30 días calendario</strong> siguientes a tu solicitud, por el mismo medio de pago o por transferencia.</p>
+<h2>3. Productos defectuosos</h2><p>Si tu joya llega con un defecto de fabricación o presenta un problema cubierto por la garantía, la reparamos, la cambiamos por una igual o, si no es posible, te devolvemos el dinero. En estos casos <strong>Casa Orus asume el costo del envío</strong>. Recuerda que el color tiene <a href="/garantia-y-cuidados/">5 años de garantía</a>.</p>
+<h2>4. Piezas sin cambio ni devolución</h2><ul><li>Piezas personalizadas o hechas por encargo (por ejemplo, manillas con placa grabada o medidas especiales), salvo defecto de fabricación.</li><li>Aretes de topo o de poste que ya hayan sido usados, por higiene.</li><li>Joyas con daños por mal uso, golpes, químicos o reparaciones hechas por terceros.</li></ul>
+<h2>5. Cómo solicitarlo</h2><ol><li>Escríbenos por <a href="https://wa.me/573142720023" rel="noopener">WhatsApp</a> con tu número de pedido, fotos de la pieza y el motivo.</li><li>Te confirmamos si aplica y te damos la dirección de envío.</li><li>Cuando recibamos y revisemos la pieza (hasta 5 días hábiles), hacemos el cambio o el reembolso.</li></ol>
+<p>Esta política no limita los derechos que te da la ley colombiana como consumidor.</p></section>''')
     simple('/privacidad/', 'Política de Privacidad | Casa Orus', 'Política de tratamiento de datos personales de Casa Orus conforme a la Ley 1581 de 2012.', 'Legal', 'Política de <span class="oro">privacidad</span>',
            '''<section class="articulo" style="padding-top:0"><p>Casa Orus trata los datos personales que nos compartes (nombre, teléfono, correo y dirección de envío) únicamente para atender tus pedidos, consultas y garantías, de acuerdo con la Ley 1581 de 2012 y sus decretos reglamentarios.</p>
 <p>Este sitio no tiene formularios ni cuentas de usuario: el contacto se realiza por WhatsApp, Instagram o correo electrónico. No vendemos ni cedemos tus datos a terceros.</p>
@@ -521,7 +529,7 @@ def assets():
                    'icons': [{'src': '/assets/img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/assets/img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}, f)
 
 def seo_files(P):
-    urls = ['/', '/coleccion/', '/coleccion/fe-y-proteccion/'] + [f'/coleccion/{c[0]}/' for c in CATS] + ['/creaciones/', '/nuestra-historia/', '/garantia-y-cuidados/', '/preguntas-frecuentes/', '/regalos/', '/guias/', '/aliados/', '/contacto/', '/privacidad/'] + [f'/guias/{g[0]}/' for g in GUIAS]
+    urls = ['/', '/coleccion/', '/coleccion/fe-y-proteccion/'] + [f'/coleccion/{c[0]}/' for c in CATS] + ['/creaciones/', '/nuestra-historia/', '/garantia-y-cuidados/', '/preguntas-frecuentes/', '/regalos/', '/guias/', '/aliados/', '/contacto/', '/politica-de-devoluciones/', '/privacidad/'] + [f'/guias/{g[0]}/' for g in GUIAS]
     pri = lambda u: '1.0' if u == '/' else '0.9' if u.startswith('/coleccion') else '0.7'
     xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">']
     for u in urls: xml.append(f'<url><loc>{DOM}{u}</loc><lastmod>{HOY}</lastmod><priority>{pri(u)}</priority></url>')
