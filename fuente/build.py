@@ -374,6 +374,42 @@ GUIAS = [
 <tr><td>Oro laminado</td><td>Capas de oro unidas al metal base con calor y presión.</td><td>Alta: pensado para el uso diario durante años.</td></tr></tbody></table>
 <h2>¿Y el metal de abajo?</h2><p>Importa tanto como la capa de oro. Un metal base de baja calidad puede oxidarse y causar alergias. Por eso en Casa Orus usamos <strong>plata ley 925 con tres capas de oro 18k</strong>, sin níquel.</p>
 <h2>¿Cuál me conviene?</h2><p>Si quieres una pieza para llevar todos los días, el oro laminado es la opción con mejor relación entre precio, brillo y duración.</p>'''),
+ ('significado-medalla-san-benito', 'Medalla de San Benito: significado y cómo llevarla', 'Qué representan sus letras y símbolos, de dónde viene y cómo usarla en manillas, cadenas y dijes.',
+  '''<p>La medalla de San Benito es una de las piezas de protección más queridas en Colombia. Se lleva en manillas, cadenas, dijes y hasta en rosarios, y casi siempre tiene una historia de fe detrás.</p>
+<h2>¿Quién fue San Benito?</h2><p>San Benito de Nursia vivió en Italia entre los siglos V y VI. Fundó la orden benedictina y escribió la Regla que todavía siguen los monasterios benedictinos. Desde hace siglos se le asocia con la protección frente al mal.</p>
+<h2>Qué significan sus símbolos</h2><ul><li><strong>La cruz:</strong> en el reverso aparece una cruz grande, centro de la medalla.</li><li><strong>Las letras C S P B:</strong> abrevian en latín «Cruz del Santo Padre Benito».</li><li><strong>Las letras en la cruz:</strong> forman una oración breve en latín que pide que la cruz sea luz y que el mal se aleje.</li><li><strong>PAX:</strong> en la parte superior, «paz», el lema benedictino.</li><li><strong>El anverso:</strong> muestra a San Benito con la cruz en una mano y el libro de su Regla en la otra.</li></ul>
+<h2>¿Cómo se lleva?</h2><p>No hay una única forma correcta. Muchas personas la usan en una <a href="/coleccion/fe-y-proteccion/">manilla de protección</a> en la muñeca, otras como <a href="/coleccion/dijes/">dije</a> en una cadena cerca del pecho. Lo importante es la intención con la que se lleva; muchas familias la hacen bendecir antes de usarla o regalarla.</p>
+<h2>Un regalo con significado</h2><p>Por su carga espiritual es un regalo muy común en bautizos, primeras comuniones, grados y viajes. En oro laminado 18k sobre plata ley 925 se puede llevar todos los días sin que pierda el color.</p>
+<div class="botones"><a class="btn btn-oro" href="/coleccion/fe-y-proteccion/">Ver piezas de fe y protección</a></div>'''),
+ ('regalos-primera-comunion-grados-15-anos', 'Qué regalar en una primera comunión, grado o quince años', 'Ideas de joyas con significado para cada celebración, y cómo acertar con la talla y el estilo.',
+  '''<p>Una joya es de los pocos regalos que se guardan para siempre. Elegir bien depende de la ocasión, de la edad y del estilo de quien la va a llevar.</p>
+<h2>Primera comunión</h2><p>Es una celebración de fe, así que las piezas religiosas son las protagonistas: una medalla de la Virgen o de San Benito, un <a href="/coleccion/rosarios-y-cruceros/">rosario o crucero</a>, o una manilla delicada con un dije pequeño. Para niñas y niños conviene una cadena corta, de 40 a 45 cm, y piezas livianas.</p>
+<h2>Grados</h2><p>Un grado marca un nuevo comienzo. Funcionan muy bien las piezas para todos los días que acompañen la siguiente etapa: una <a href="/coleccion/cadenas-y-gargantillas/">cadena</a> sobria, unos <a href="/coleccion/aretes/">topos</a> o un <a href="/coleccion/anillos/">anillo</a>. Si quieres algo más personal, una manilla con placa personalizada con la fecha o las iniciales.</p>
+<h2>Quince años</h2><p>Es el momento de una pieza especial: unos aretes con brillo, una gargantilla, un <a href="/coleccion/conjuntos/">conjunto</a> de cadena y aretes, o un dije con su inicial. Las cadenas de 45 cm con un dije son de lo más pedido.</p>
+<h2>Consejos para acertar</h2><ul><li><strong>Talla de anillo:</strong> si no la sabes, mira nuestra guía para medirla en casa o elige un anillo ajustable.</li><li><strong>Largo de cadena:</strong> 40 a 45 cm queda en la base del cuello; 50 a 65 cm cae más abajo y es ideal para dijes grandes.</li><li><strong>Piel sensible:</strong> elige piezas libres de níquel, como todas las de Casa Orus.</li><li><strong>Garantía:</strong> un regalo con 5 años de garantía en el color da tranquilidad a quien lo recibe.</li></ul>
+<div class="botones"><a class="btn btn-oro" href="/regalos/">Ver ideas de regalo</a></div>'''),
+ ('como-saber-talla-de-anillo', 'Cómo saber tu talla de anillo en casa', 'Tres métodos sencillos para medir tu talla sin ir a una joyería, con tabla de equivalencias.',
+  '''<p>Comprar un anillo en línea da miedo cuando no sabes tu talla. Con cualquiera de estos tres métodos la puedes averiguar en pocos minutos.</p>
+<h2>Método 1: con un anillo que ya te quede bien</h2><ol><li>Pon el anillo sobre una regla.</li><li>Mide el <strong>diámetro interior</strong>, de borde a borde por dentro, en milímetros.</li><li>Busca esa medida en la tabla de abajo.</li></ol>
+<h2>Método 2: con un hilo o una tira de papel</h2><ol><li>Enrolla el hilo o el papel en la base del dedo, sin apretar.</li><li>Marca el punto donde se cruza.</li><li>Mide el largo en milímetros: esa es la <strong>circunferencia</strong>. Búscala en la tabla.</li></ol>
+<p>Comprueba que el anillo pueda pasar por el nudillo: si tu nudillo es más ancho que la base del dedo, mide también ahí y elige la medida intermedia.</p>
+<h2>Método 3: elige un anillo ajustable</h2><p>Si es un regalo sorpresa, la opción más segura es un <a href="/coleccion/anillos/">anillo ajustable</a>, que se adapta a varias tallas.</p>
+<h2>Tabla de equivalencias</h2>
+<table class="tabla"><thead><tr><th>Talla (Colombia / EE. UU.)</th><th>Diámetro interior</th><th>Circunferencia</th></tr></thead><tbody>
+<tr><td>5</td><td>15,7 mm</td><td>49,3 mm</td></tr><tr><td>5,5</td><td>16,1 mm</td><td>50,6 mm</td></tr><tr><td>6</td><td>16,5 mm</td><td>51,9 mm</td></tr><tr><td>6,5</td><td>16,9 mm</td><td>53,1 mm</td></tr><tr><td>7</td><td>17,3 mm</td><td>54,4 mm</td></tr><tr><td>7,5</td><td>17,7 mm</td><td>55,7 mm</td></tr><tr><td>8</td><td>18,1 mm</td><td>57,0 mm</td></tr><tr><td>8,5</td><td>18,5 mm</td><td>58,3 mm</td></tr><tr><td>9</td><td>18,9 mm</td><td>59,5 mm</td></tr><tr><td>10</td><td>19,8 mm</td><td>62,1 mm</td></tr></tbody></table>
+<h2>Consejos</h2><ul><li>Mide al final del día: los dedos suelen estar un poco más hinchados.</li><li>No midas con las manos frías; los dedos se encogen.</li><li>Si quedas entre dos tallas, elige la más grande.</li></ul>
+<p>¿Dudas? Escríbenos por WhatsApp y te ayudamos a elegir.</p>'''),
+ ('cadenas-de-oro-laminado-tipos-y-largos', 'Tipos de cadenas de oro laminado y qué largo elegir', 'Cubana, militar, veneciana, singapur, franco: en qué se diferencian y cómo elegir el largo ideal.',
+  '''<p>Elegir una cadena no es solo escoger el tejido: el largo y el grosor cambian por completo cómo se ve. Esta guía te ayuda a elegir la tuya.</p>
+<h2>Los tejidos más populares</h2><ul><li><strong>Cubana:</strong> eslabones gruesos entrelazados, planos y brillantes. Es la más llamativa; ideal sola o con un dije grande.</li><li><strong>Militar:</strong> eslabones ovalados, unidos en un patrón alterno. Clásica y resistente, muy versátil.</li><li><strong>Veneciana:</strong> eslabones cuadrados pequeños que forman una línea fina y uniforme. Elegante y discreta, perfecta para dijes delicados.</li><li><strong>Singapur:</strong> tejido torcido que refleja la luz en movimiento. Fina y femenina.</li><li><strong>Franco:</strong> eslabones en forma de V que forman una cadena firme y redonda. Muy resistente para llevar todos los días.</li><li><strong>Escalera y 3×1:</strong> patrones que combinan eslabones de distintos tamaños; aportan textura y personalidad.</li></ul>
+<h2>Qué largo elegir</h2>
+<table class="tabla"><thead><tr><th>Largo</th><th>Dónde cae</th><th>Ideal para</th></tr></thead><tbody>
+<tr><td>35–40 cm</td><td>En la base del cuello</td><td>Gargantillas, niñas, escotes amplios</td></tr>
+<tr><td>45 cm</td><td>Sobre la clavícula</td><td>El largo más pedido; dijes pequeños y medianos</td></tr>
+<tr><td>50–60 cm</td><td>Debajo de la clavícula</td><td>Dijes medianos, combinar varias cadenas</td></tr>
+<tr><td>65 cm</td><td>A la altura del pecho</td><td>Hombres, dijes grandes, medallas</td></tr></tbody></table>
+<h2>El grosor también cuenta</h2><p>Las cadenas de 1 a 2 mm son delicadas y combinan con todo. De 3 mm en adelante son protagonistas por sí solas. Para un dije pesado, elige una cadena de al menos 2 mm para que no se tuerza.</p>
+<div class="botones"><a class="btn btn-oro" href="/coleccion/cadenas-y-gargantillas/">Ver todas las cadenas</a></div>'''),
 ]
 
 def build_pages(P):
@@ -520,6 +556,25 @@ def seo_files(P):
               'Header always set X-Content-Type-Options "nosniff"', 'Header always set X-Frame-Options "SAMEORIGIN"', 'Header always set Referrer-Policy "strict-origin-when-cross-origin"',
               'Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"', '</IfModule>', 'AddType font/woff .woff', 'AddType application/manifest+json .webmanifest']
     with open(os.path.join(OUT, '.htaccess'), 'w') as f: f.write('\n'.join(lines) + '\n')
+
+    # Feed Google Merchant Center
+    import html as _h
+    CATG = {'cadenas-y-gargantillas': 'Apparel & Accessories > Jewelry > Necklaces', 'manillas-y-pulseras': 'Apparel & Accessories > Jewelry > Bracelets', 'aretes': 'Apparel & Accessories > Jewelry > Earrings',
+            'dijes': 'Apparel & Accessories > Jewelry > Charms & Pendants', 'anillos': 'Apparel & Accessories > Jewelry > Rings', 'tobilleras': 'Apparel & Accessories > Jewelry > Anklets',
+            'rosarios-y-cruceros': 'Apparel & Accessories > Jewelry', 'conjuntos': 'Apparel & Accessories > Jewelry > Jewelry Sets'}
+    it = []
+    for p in P:
+        if not p.get('precio'): continue
+        img = p['img'] if p['img'].startswith('http') else DOM + p['img']
+        extra = ''.join(f'<g:additional_image_link>{_h.escape(g if g.startswith("http") else DOM + g)}</g:additional_image_link>' for g in p.get('galeria', [])[1:6])
+        it.append(f'<item><g:id>{_h.escape(p["ref"] if not p["propio"] else "CO-" + p["slug"])}</g:id><title>{_h.escape((p["nombre"] + " en oro laminado 18k")[:150])}</title>'
+                  f'<description>{_h.escape(p["desc"])}</description><link>{DOM}/joya/{p["slug"]}/</link><g:image_link>{_h.escape(img)}</g:image_link>{extra}'
+                  f'<g:availability>in_stock</g:availability><g:condition>new</g:condition><g:price>{p["precio"]} COP</g:price><g:brand>Casa Orus</g:brand>'
+                  f'<g:identifier_exists>no</g:identifier_exists><g:google_product_category>{_h.escape(CATG.get(p["cat"], "Apparel & Accessories > Jewelry"))}</g:google_product_category>'
+                  f'<g:product_type>{_h.escape(p["cat"].replace("-", " ").capitalize())}</g:product_type><g:material>Oro laminado 18k</g:material><g:color>Dorado</g:color><g:adult>no</g:adult></item>')
+    with open(os.path.join(OUT, 'feed-google.xml'), 'w', encoding='utf-8') as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"><channel><title>Casa Orus</title><link>' + DOM + '</link><description>Joyería en oro laminado 18k</description>\n' + '\n'.join(it) + '\n</channel></rss>\n')
+    print('feed', len(it))
 
 def main():
     if os.path.exists(OUT): shutil.rmtree(OUT)
