@@ -30,31 +30,55 @@
     });
   });
 
-  // Filtros de listado (por subtipo) y buscador del catálogo
+  // Filtros de listado (tipo + subfiltro), orden por precio y buscador
   var lista = document.getElementById('lista');
   if (lista) {
     var cards = Array.prototype.slice.call(lista.querySelectorAll('.card'));
+    cards.forEach(function (c, i) { c.setAttribute('data-i', i); });
     var contador = document.getElementById('contador');
     var input = document.getElementById('q');
-    var activo = 'todo';
-    function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+    var orden = document.getElementById('orden');
+    var tipo = 'todo', activo = 'todo';
+    function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+    function tiene(c, t) { return t === 'todo' || (' ' + c.getAttribute('data-tags') + ' ').indexOf(' ' + t + ' ') > -1; }
     function aplicar() {
-      var q = norm(input ? input.value : '');
-      var n = 0;
+      var q = norm(input ? input.value : ''), n = 0;
       cards.forEach(function (c) {
-        var ok = (activo === 'todo' || (' ' + c.getAttribute('data-tags') + ' ').indexOf(' ' + activo + ' ') > -1)
-          && (!q || norm(c.getAttribute('data-buscar')).indexOf(q) > -1);
+        var ok = tiene(c, tipo) && tiene(c, activo) && (!q || norm(c.getAttribute('data-buscar')).indexOf(q) > -1);
         c.hidden = !ok; if (ok) n++;
+      });
+      // subfiltros sin piezas dentro del tipo elegido se ocultan
+      document.querySelectorAll('.filtros .chip[data-f]').forEach(function (ch) {
+        var f = ch.getAttribute('data-f');
+        if (f === 'todo') return;
+        ch.hidden = !cards.some(function (c) { return tiene(c, tipo) && tiene(c, f); });
       });
       if (contador) contador.textContent = n + (n === 1 ? ' pieza' : ' piezas');
     }
-    document.querySelectorAll('.filtros .chip[data-f]').forEach(function (ch) {
-      ch.addEventListener('click', function () {
-        activo = ch.getAttribute('data-f');
-        document.querySelectorAll('.filtros .chip[data-f]').forEach(function (x) { x.setAttribute('aria-pressed', x === ch ? 'true' : 'false'); });
-        aplicar();
+    function ordenar() {
+      var v = orden ? orden.value : 'rel';
+      var arr = cards.slice().sort(function (a, b) {
+        if (v === 'rel') return a.getAttribute('data-i') - b.getAttribute('data-i');
+        var pa = +a.getAttribute('data-precio') || (v === 'asc' ? 1e12 : -1), pb = +b.getAttribute('data-precio') || (v === 'asc' ? 1e12 : -1);
+        return v === 'asc' ? pa - pb : pb - pa;
       });
+      arr.forEach(function (c) { lista.appendChild(c); });
+    }
+    function grupo(sel, set) {
+      document.querySelectorAll(sel).forEach(function (ch) {
+        ch.addEventListener('click', function () {
+          set(ch);
+          document.querySelectorAll(sel).forEach(function (x) { x.setAttribute('aria-pressed', x === ch ? 'true' : 'false'); });
+          aplicar();
+        });
+      });
+    }
+    grupo('.filtros .chip[data-t]', function (ch) {
+      tipo = ch.getAttribute('data-t'); activo = 'todo';
+      document.querySelectorAll('.filtros .chip[data-f]').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-f') === 'todo' ? 'true' : 'false'); });
     });
+    grupo('.filtros .chip[data-f]', function (ch) { activo = ch.getAttribute('data-f'); });
+    if (orden) orden.addEventListener('change', ordenar);
     if (input) {
       var p = new URLSearchParams(location.search).get('q'); if (p) input.value = p;
       input.addEventListener('input', aplicar);

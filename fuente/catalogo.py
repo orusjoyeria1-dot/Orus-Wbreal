@@ -1,6 +1,8 @@
 """Normaliza el catálogo del proveedor y las piezas propias en una lista de productos."""
 import re, unicodedata, hashlib
-from data_raw import RAW, OWN
+import json, os
+from data_raw import RAW, OWN, OWN_PRECIOS
+PRECIOS = json.load(open(os.path.join(os.path.dirname(__file__), 'precios', 'detal.json')))
 
 IMG_BASE = 'https://belatrizcolombia.com/app/public/template/shop/img/img_productos/'  # cambiar a '/assets/catalogo/' si se alojan localmente
 
@@ -178,7 +180,7 @@ def build():
             cat = site_cat(src, pl)
             name = clean_title(title, src)
             folder = ref
-            prods.append(dict(ref=ref, nombre=name, cat=cat, origen=src, propio=False,
+            prods.append(dict(ref=ref, nombre=name, cat=cat, origen=src, propio=False, it=bool(re.search(r'\bIT\b|italy', title, re.I)),
                               img=IMG_BASE + folder + '/PERFIL.webp', img2=IMG_BASE + folder + '/' + folder + '_1.webp',
                               galeria=[IMG_BASE + folder + '/PERFIL.webp'] + [IMG_BASE + folder + f'/{folder}_{i}.webp' for i in (1, 2, 3)]))
     # Iniciales agrupadas por familia
@@ -197,11 +199,20 @@ def build():
     for p in prods:
         p.setdefault('slug', slugify(p['nombre']) + ('' if p['propio'] else '-' + slugify(p['ref'])))
         p['tags'] = tags_for(p['nombre'], p['cat']) + (['casa-orus'] if p['propio'] else [])
+        if p.get('it') and 'italiana' not in p['tags']: p['tags'].append('italiana')
         if p['propio']:
             p['tags'] += ['hecho-a-mano']
             if any(k in p['nombre'].lower() for k in ['benito', 'guadalupe']): p['tags'].append('fe')
         p['medidas'] = medidas(p['nombre'])
         p['desc'] = (p['nombre'] + ' en oro laminado 18k, hecha a mano por Casa Orus en Medellín. ' + p['desc_propia']) if p['propio'] else describe(p['nombre'], p['cat'], p['ref'])
+    fam = {'23360': '23360-P', '23370': '23370-C', '24360': '24360-E', '25360': '25360-E', '26360': '26360-B'}
+    for p in prods:
+        p['precio'] = OWN_PRECIOS.get(p.get('slug')) if p['propio'] else PRECIOS.get(fam.get(p['ref'], p['ref']))
+        # tipo dentro de manillas y pulseras
+        if p['cat'] == 'manillas-y-pulseras':
+            p['tags'].append('manillas' if (p['propio'] or 'hilo' in p['nombre'].lower()) else 'pulseras')
+    # piezas descontinuadas: el proveedor ya no las tiene en su catálogo detal
+    prods = [p for p in prods if p['propio'] or p['precio']]
     slugs = [p['slug'] for p in prods]
     assert len(slugs) == len(set(slugs)), 'slugs duplicados'
     return prods

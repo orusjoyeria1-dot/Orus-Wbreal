@@ -1,7 +1,8 @@
 # Catálogo del proveedor (Belatriz Colombia), extraído el 07/11/2026 de su catálogo público.
 # Formato: "titulo original | referencia". Categoría de origen = clave del diccionario.
 RAW = {}
-RAW['cadenas'] = """C Cubana Con Destellos 60 Cm | 41413
+RAW['cadenas'] = """C Militar Italy IT 65 Cms | 45003
+C Cubana Con Destellos 60 Cm | 41413
 C Aros Diamantada Gruesa 65 Cm | 41808
 C Espejo Cuadrada 65 Cms | 42108
 C Cubana Sol 65 Cms | 43033
@@ -175,7 +176,11 @@ A Topo Floral 6 mm | 35736
 A Topo Deux Love 4 mm | 35737
 A Topo Flor Encanto 5 mm | 35738
 A Topo Argen 6 mm | 35743"""
-RAW['pulseras'] = """P Hilo Laminado 15 Cms + Extensor AZUL | 50003-AZULTOMMY
+RAW['pulseras'] = """P Militar Italy IT 16.5 Cms | 55001
+P Barril italy 3 mm 19.5 Cms | 55042
+P Escalerita Con Destellos IT 1.7 mm 14 Cms | 55170
+P Escalera Plana Destellos 3 mm 16.5 Cms | 55241
+P Hilo Laminado 15 Cms + Extensor AZUL | 50003-AZULTOMMY
 P Hilo Laminado 15 Cms + Extensor NEGRO | 50003-NEGRO
 P Hilo Laminado 15 Cms + Extensor ROJO | 50003-ROJO
 P Heart | 50030
@@ -250,7 +255,12 @@ C Crucero con Circonias 1.8 Cms Verde | 24555-VERDE
 Crucero Virgen Con Circonias Verde | 25555-VERDE
 Rosario IT Balin 2,5 mm 45 Cms | 95036
 Denario Benedictus 16 Cms + Ext | 90006"""
-RAW['dijes'] = """D Cherry | 20002
+RAW['dijes'] = """D Virgen Milagrosa Red | 23102
+D Cruz 5 Circonias | 23117
+D Cruz Celestial | 23164
+D Mini Huella Perro | 23441
+H Bolsa de Dinero | 24003
+D Cherry | 20002
 D El Viajero | 20004
 D Signo Peso | 20005
 D Royal Green 8 mm | 20006
@@ -526,3 +536,7 @@ OWN = [
  ('manilla-lotus', 'Manilla Lotus', 'manillas', '/assets/img/creaciones/manilla-lotus.webp', 'Balines italianos de 4 y 5 mm y lisos de 3 mm con una flor de loto en oro laminado.'),
  ('manilla-san-benito', 'Manilla San Benito', 'manillas', '/assets/img/creaciones/manilla-san-benito.webp', 'Hilo rojo tejido con balines de 4 mm y la medalla de San Benito en oro laminado.'),
 ]
+
+OWN_PRECIOS = {'anillo-tejido-balin-liso-4mm': 70000, 'anillo-tejido-balines-4mm': 90000, 'anillo-tejido-balines-italianos': 130000,
+ 'manilla-oso-balines': 150000, 'manilla-verde-bola-de-fuego': 160000, 'manilla-roja-tejida-balines': 95000, 'manilla-chakras-trebol': 130000,
+ 'manilla-virgen-de-guadalupe': 340000, 'manilla-placa-personalizada': 160000, 'manilla-divino-nino': 290000, 'manilla-san-benito': 130000}

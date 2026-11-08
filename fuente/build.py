@@ -12,6 +12,9 @@ KIT = '/home/claude/kit/casa-orus-kit'
 HOY = datetime.date.today().isoformat()
 E = html.escape
 
+def cop(v):
+    return '$' + f'{v:,}'.replace(',', '.') if v else ''
+
 def wa(msg):
     return f'https://wa.me/{WA_NUM}?text=' + quote(msg)
 
@@ -35,14 +38,15 @@ PICT = {
  'frasco': f'<svg viewBox="0 0 24 24" {L}><path d="M9 3h6v3H9z"/><path d="M8 6h8l1 3v11H7V9z"/></svg>',
 }
 
-CAT_IMG = {}  # se rellena con la primera pieza con foto de cada categoría
+CAT_IMG = {}
+DUP = {}  # se rellena con la primera pieza con foto de cada categoría
 
 # ---------------------------------------------------------------- plantillas
 NAV = [('Inicio', '/'), ('Colección', '/coleccion/'), ('Manillas', '/coleccion/manillas-y-pulseras/'), ('Cadenas', '/coleccion/cadenas-y-gargantillas/'),
        ('Aretes', '/coleccion/aretes/'), ('Dijes', '/coleccion/dijes/'),
        ('Casa Orus', '/creaciones/'), ('Historia', '/nuestra-historia/'), ('Guías', '/guias/')]
 
-def head(title, desc, path, og_img='/assets/img/og-casa-orus.png', schema=None, noindex=False, typ='website'):
+def head(title, desc, path, og_img='/assets/img/og-casa-orus.png', schema=None, noindex=False, typ='website', precio=None):
     can = DOM + path
     sch = ''.join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in (schema or []))
     return f'''<!DOCTYPE html>
@@ -57,7 +61,8 @@ def head(title, desc, path, og_img='/assets/img/og-casa-orus.png', schema=None, 
 <meta property="og:type" content="{typ}"><meta property="og:site_name" content="Casa Orus">
 <meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}">
 <meta property="og:url" content="{can}"><meta property="og:image" content="{og_img if og_img.startswith('http') else DOM + og_img}">
-<meta property="og:locale" content="es_CO"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_CO"><meta name="twitter:card" content="summary_large_image">{f'<meta property="product:price:amount" content="{precio}"><meta property="product:price:currency" content="COP">' if precio else ""}
+<meta name="geo.region" content="CO-ANT"><meta name="geo.placename" content="Medellín">
 <meta name="theme-color" content="#190420">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
@@ -123,9 +128,10 @@ def card(p, lazy=True):
     alt_attr = f' data-alt="{p["img2"]}"' if p['img2'] else ''
     etq = '<span class="etq">Casa Orus</span>' if p['propio'] else ''
     buscar = E(f"{p['nombre']} {p['ref']} {CAT[p['cat']][1]} {' '.join(p['tags'])}")
-    return (f'<a class="card" href="/joya/{p["slug"]}/" data-tags="{" ".join(p["tags"] + [p["cat"]])}" data-buscar="{buscar}">'
+    precio = f'<span class="precio">{cop(p["precio"])}</span>' if p['precio'] else '<span class="precio consultar">Consultar precio</span>'
+    return (f'<a class="card" href="/joya/{p["slug"]}/" data-tags="{" ".join(p["tags"] + [p["cat"]])}" data-precio="{p["precio"] or 0}" data-buscar="{buscar}">'
             f'<div class="card-img">{etq}<img src="{p["img"]}"{alt_attr} alt="{E(p["nombre"])} en oro laminado 18k" width="400" height="400" loading="{"lazy" if lazy else "eager"}" decoding="async" referrerpolicy="no-referrer" onerror="orusImg(this)">{sinfoto}</div>'
-            f'<div class="card-txt"><h3>{E(p["nombre"])}</h3><span class="ref">{"Hecho a mano" if p["propio"] else "Ref. " + E(p["ref"])}</span></div></a>')
+            f'<div class="card-txt"><h3>{E(p["nombre"])}</h3>{precio}<span class="ref">{"Hecho a mano" if p["propio"] else "Ref. " + E(p["ref"])}</span></div></a>')
 
 def write(path, content):
     full = os.path.join(OUT, path.strip('/'), 'index.html') if not path.endswith('.html') else os.path.join(OUT, path.strip('/'))
@@ -150,12 +156,21 @@ CAT_TXT = {
  'conjuntos': ('Conjuntos en oro laminado 18k', '<p>Cadena y aretes a juego, listos para regalar o regalarte.</p>', []),
 }
 SUBF = {
- 'manillas-y-pulseras': [('casa-orus', 'Hechas por Casa Orus'), ('fe', 'Fe y protección'), ('italiana', 'Italianas'), ('brillo', 'Con brillo')],
+ 'manillas-y-pulseras': [('fe', 'Fe y protección'), ('italiana', 'Italianas'), ('brillo', 'Con brillo'), ('amor', 'Corazones')],
  'cadenas-y-gargantillas': [('corta', 'Cortas (hasta 45 cm)'), ('larga', 'Largas (50 a 65 cm)'), ('italiana', 'Italianas'), ('gargantilla', 'Gargantillas'), ('brillo', 'Con brillo')],
  'aretes': [('topos', 'Topos'), ('candongas', 'Candongas'), ('otros-aretes', 'Otros diseños'), ('fe', 'Fe y protección'), ('amor', 'Corazones')],
  'dijes': [('fe', 'Fe y protección'), ('iniciales', 'Iniciales'), ('amor', 'Amor'), ('brillo', 'Con circonias')],
  'anillos': [('casa-orus', 'Hechos por Casa Orus')],
 }
+TIPOS = {'manillas-y-pulseras': [('manillas', 'Manillas · balines y tejidas'), ('pulseras', 'Pulseras')]}
+
+def orden():
+    return ('<div class="orden"><label for="orden">Ordenar:</label><select id="orden"><option value="rel">Destacados</option>'
+            '<option value="asc">Precio: menor a mayor</option><option value="desc">Precio: mayor a menor</option></select></div>')
+
+def rango(prods):
+    v = sorted(p['precio'] for p in prods if p['precio'])
+    return (v[0], v[-1]) if v else (None, None)
 
 def faq_html(faqs):
     return ''.join(f'<details class="acord"><summary>{E(q)}</summary><p>{E(a)}</p></details>' for q, a in faqs)
@@ -168,17 +183,25 @@ def page_cat(slug, prods):
     c = CAT[slug]; h2, txt, faqs = CAT_TXT[slug]
     items = [('Inicio', '/'), ('Colección', '/coleccion/'), (c[1], None)]
     chips = ''.join(f'<button class="chip" type="button" data-f="{k}" aria-pressed="false">{n}</button>' for k, n in SUBF.get(slug, []) if any(k in p['tags'] for p in prods))
-    filtros = f'<div class="filtros" role="group" aria-label="Filtrar"><button class="chip" type="button" data-f="todo" aria-pressed="true">Todas</button>{chips}</div>' if chips else ''
+    tipos = ''.join(f'<button class="chip tipo" type="button" data-t="{k}" aria-pressed="false">{n}</button>' for k, n in TIPOS.get(slug, []))
+    filtros = ''
+    if tipos:
+        filtros += f'<div class="filtros tipos" role="group" aria-label="Tipo"><button class="chip tipo" type="button" data-t="todo" aria-pressed="true">Todas</button>{tipos}</div>'
+    if chips:
+        filtros += f'<div class="filtros" role="group" aria-label="Filtrar"><button class="chip" type="button" data-f="todo" aria-pressed="true">{"Todo" if tipos else "Todas"}</button>{chips}</div>'
+    filtros += orden()
+    lo, hi = rango(prods)
     grid = ''.join(card(p, i > 7) for i, p in enumerate(sorted(prods, key=lambda p: (not p['propio'], p['nombre']))))
     sch = [bc_schema(items), {'@context': 'https://schema.org', '@type': 'CollectionPage', 'name': c[1], 'url': DOM + f'/coleccion/{slug}/',
            'mainEntity': {'@type': 'ItemList', 'numberOfItems': len(prods), 'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'url': DOM + f'/joya/{p["slug"]}/'} for i, p in enumerate(prods[:50])]}}]
     if faqs: sch.append(faq_schema(faqs))
     body = f'''<section class="cab-cat"><div class="contenedor">{migas(items)}
 <span class="eyebrow">Colección · {len(prods)} piezas</span><h1>{E(c[1])} <span class="oro">en oro laminado 18k</span></h1>
-<p class="lead">{E(c[3])}. Pide cualquier pieza por WhatsApp citando su referencia.</p></div></section>
+<p class="lead">{E(c[3])}{f", desde {cop(lo)}" if lo else ""}. Pide cualquier pieza por WhatsApp citando su referencia.</p></div></section>
 <section class="contenedor" style="padding-bottom:90px">{filtros}<p class="contador" id="contador" aria-live="polite"></p><div class="grid" id="lista">{grid}</div>
 <div class="texto-cat"><h2>{E(h2)}</h2>{txt}{('<h2 style="margin-top:40px">Preguntas frecuentes</h2>' + faq_html(faqs)) if faqs else ''}</div></section>'''
-    write(f'/coleccion/{slug}/', head(c[4], c[5], f'/coleccion/{slug}/', schema=sch) + body + foot())
+    desc = c[5].replace('Envíos a toda Colombia.', f'Desde {cop(lo)}. Envíos a Colombia.') if lo else c[5]
+    write(f'/coleccion/{slug}/', head(c[4], desc[:160], f'/coleccion/{slug}/', schema=sch) + body + foot())
 
 def page_coleccion(P):
     items = [('Inicio', '/'), ('Colección', None)]
@@ -191,7 +214,7 @@ def page_coleccion(P):
 <section class="contenedor" style="padding:30px 24px 90px" id="buscar"><h2>Todas las piezas</h2>
 <form class="buscador" role="search" action="/coleccion/"><label class="salto" for="q">Buscar joyas</label><input id="q" name="q" type="search" placeholder="Busca: cubana, San Benito, topos, 45413…" autocomplete="off"><button class="btn btn-oro" type="submit">Buscar</button></form>
 <div class="filtros" role="group" aria-label="Filtrar por categoría"><button class="chip" type="button" data-f="todo" aria-pressed="true">Todas</button>{chips}<button class="chip" type="button" data-f="fe" aria-pressed="false">Fe y protección</button></div>
-<p class="contador" id="contador" aria-live="polite"></p><div class="grid" id="lista">{grid}</div></section>'''
+{orden()}<p class="contador" id="contador" aria-live="polite"></p><div class="grid" id="lista">{grid}</div></section>'''
     write('/coleccion/', head('Colección de Joyería en Oro Laminado 18k | Casa Orus Medellín', 'Más de 500 piezas en oro laminado 18k: manillas, cadenas, aretes, dijes, anillos y tobilleras. Pide por WhatsApp con envío a toda Colombia.', '/coleccion/', schema=[bc_schema(items)]) + body + foot())
 
 def cat_tile(c):
@@ -210,16 +233,16 @@ def page_fe(P):
             ('¿Son buen regalo de primera comunión o bautizo?', 'Sí. Las medallas de la Virgen y las manillas de San Benito son de los regalos más elegidos para estas fechas.')]
     body = f'''<section class="cab-cat noche" style="padding-bottom:56px"><div class="contenedor">{migas(items)}<span class="eyebrow">Colección especial</span>
 <h1>Fe y protección <span class="oro">en oro laminado</span></h1><p class="lead">Solo piezas de San Benito y de la Virgen: Guadalupe, Milagrosa, del Carmen, de Fátima y Rosa Mística, en manillas, medallas, cruceros y aretes. Para llevar tu fe contigo, todos los días.</p></div></section>
-<section class="contenedor" style="padding:46px 24px 90px"><div class="filtros" role="group" aria-label="Filtrar"><button class="chip" type="button" data-f="todo" aria-pressed="true">Todas</button>{chips}</div>
+<section class="contenedor" style="padding:46px 24px 90px"><div class="filtros" role="group" aria-label="Filtrar"><button class="chip" type="button" data-f="todo" aria-pressed="true">Todas</button>{chips}</div>{orden()}
 <p class="contador" id="contador" aria-live="polite"></p><div class="grid" id="lista">{grid}</div>
 <div class="texto-cat"><h2>Joyería de fe hecha para el día a día</h2><p>Las piezas de protección son las que más acompañan a nuestros clientes: una manilla de San Benito que no se quitan, una medalla de la Virgen de Guadalupe o de la Milagrosa que acompaña cada paso. Por eso las hacemos en oro laminado 18k, resistente al uso diario y con 5 años de garantía en el color.</p><h2 style="margin-top:40px">Preguntas frecuentes</h2>{faq_html(faqs)}</div></section>'''
-    write('/coleccion/fe-y-proteccion/', head('Manillas y Medallas de Protección en Oro Laminado | San Benito, Guadalupe | Casa Orus', 'Manillas y medallas de San Benito y de la Virgen de Guadalupe, la Milagrosa y del Carmen en oro laminado 18k, hechas en Medellín. 5 años de garantía.', '/coleccion/fe-y-proteccion/', schema=[bc_schema(items), faq_schema(faqs)]) + body + foot())
+    write('/coleccion/fe-y-proteccion/', head('Manillas y Medallas San Benito y Virgen en Oro Laminado | Casa Orus', ('Manillas y medallas de San Benito y de la Virgen de Guadalupe, la Milagrosa y del Carmen en oro laminado 18k, hechas en Medellín. 5 años de garantía.')[:160], '/coleccion/fe-y-proteccion/', schema=[bc_schema(items), faq_schema(faqs)]) + body + foot())
 
 def page_producto(p, P):
     c = CAT[p['cat']]
     items = [('Inicio', '/'), ('Colección', '/coleccion/'), (c[1], f'/coleccion/{p["cat"]}/'), (p['nombre'], None)]
     titulo = f'{p["nombre"]} en oro laminado 18k'
-    msg = f'Hola Casa Orus ✨ me interesa la pieza "{p["nombre"]}"' + ('' if p['propio'] else f' (Ref. {p["ref"]})') + f'. {DOM}/joya/{p["slug"]}/'
+    msg = f'Hola Casa Orus ✨ me interesa la pieza "{p["nombre"]}"' + ('' if p['propio'] else f' (Ref. {p["ref"]})') + (f' de {cop(p["precio"])}' if p['precio'] else '') + f'. {DOM}/joya/{p["slug"]}/'
     gal = p['galeria']
     thumbs = ''.join(f'<button type="button" aria-label="Ver foto {i+1}" aria-current="{"true" if i == 0 else "false"}"><img src="{u}" alt="" loading="lazy" referrerpolicy="no-referrer"></button>' for i, u in enumerate(gal)) if len(gal) > 1 else ''
     datos = [('Material', 'Oro laminado 18k sobre plata ley 925'), ('Categoría', c[1])] + list(p['medidas'].items()) + [('Elaboración', 'Hecha a mano en Medellín' if p['propio'] else 'Selección Casa Orus'), ('Garantía', '5 años en el color')]
@@ -227,25 +250,32 @@ def page_producto(p, P):
     var = f'<p style="margin:14px 0 4px;font-size:14px"><b style="font-weight:500">Letras disponibles:</b></p><div class="variantes">{"".join(f"<span>{v}</span>" for v in p["variantes"])}</div>' if p.get('variantes') else ''
     rel = [x for x in P if x['cat'] == p['cat'] and x['slug'] != p['slug'] and (set(x['tags']) & set(p['tags']) or not p['tags'])][:8] or [x for x in P if x['cat'] == p['cat'] and x['slug'] != p['slug']][:8]
     sch = [bc_schema(items), {'@context': 'https://schema.org', '@type': 'Product', 'name': titulo, 'image': gal[:1], 'description': p['desc'],
-           'sku': p['ref'], 'brand': {'@type': 'Brand', 'name': 'Casa Orus'}, 'material': 'Oro laminado 18k', 'category': c[1], 'url': DOM + f'/joya/{p["slug"]}/'}]
+           'sku': p['ref'], 'mpn': p['ref'], 'brand': {'@type': 'Brand', 'name': 'Casa Orus'}, 'material': 'Oro laminado 18k', 'category': c[1], 'url': DOM + f'/joya/{p["slug"]}/'}]
+    if p['precio']:
+        sch[1]['offers'] = {'@type': 'Offer', 'url': DOM + f'/joya/{p["slug"]}/', 'priceCurrency': 'COP', 'price': p['precio'], 'priceValidUntil': f'{datetime.date.today().year + 1}-12-31',
+            'availability': 'https://schema.org/InStock', 'itemCondition': 'https://schema.org/NewCondition', 'seller': {'@id': DOM + '/#tienda'}}
     alt1 = f' data-alt="{p["img2"]}"' if p['img2'] else ''
     body = f'''<div class="contenedor"><div style="padding-top:28px">{migas(items)}</div>
 <article class="ficha">
 <div><div class="galeria-principal" style="position:relative"><img src="{gal[0]}"{alt1} alt="{E(titulo)}" width="800" height="800" fetchpriority="high" referrerpolicy="no-referrer" onerror="orusImg(this)"><span class="sin-foto"><img src="/assets/img/isotipo.svg" alt=""></span></div>
 <div class="miniaturas">{thumbs}</div></div>
 <div><span class="eyebrow">{"Creación Casa Orus" if p["propio"] else c[1]}</span><h1>{E(p["nombre"])} <span class="oro">en oro laminado 18k</span></h1>
+<p class="precio-ficha">{cop(p["precio"]) if p["precio"] else "Consultar precio"}{' <span>COP</span>' if p["precio"] else ""}</p>
 <p class="lead" style="font-size:17px">{E(p["desc"])}</p>{var}
 <div class="botones" style="margin-top:20px"><a class="btn btn-oro" href="{wa(msg)}" rel="noopener">{ICON["wa"]} Pedir por WhatsApp</a><a class="btn btn-linea" href="/coleccion/{p["cat"]}/">Ver más {E(c[2].lower())}</a></div>
-<p class="nota" style="margin-top:12px">Te confirmamos disponibilidad, precio y envío por WhatsApp.</p>
+<p class="nota" style="margin-top:12px">Te confirmamos disponibilidad y envío por WhatsApp.</p>
 <ul class="datos">{"".join(f"<li><b>{E(k)}</b><span>{E(v)}</span></li>" for k, v in datos)}</ul>
 <details class="acord" open><summary>Garantía de 5 años</summary><p>Tu pieza está hecha en plata ley 925 con tres capas de oro 18k, libre de níquel e hipoalergénica. Cubrimos el cambio de color durante 5 años con uso adecuado. <a href="/garantia-y-cuidados/">Ver condiciones</a>.</p></details>
 <details class="acord"><summary>Cuidados</summary><ul><li>Quítatela para bañarte, nadar o hacer ejercicio.</li><li>Aplica perfume y cremas antes de ponértela.</li><li>Guárdala seca, en su bolsita o estuche.</li></ul></details>
 <details class="acord"><summary>Envíos</summary><p>Enviamos a toda Colombia. Coordina tu pedido por WhatsApp y te damos el valor y el tiempo de entrega según tu ciudad.</p></details>
 </div></article></div>
 <section class="seccion alt" style="padding:70px 0"><div class="contenedor"><h2 class="centro">También te puede gustar</h2>{sep().replace('class="sep"', 'class="sep" style="margin:14px auto 34px"')}<div class="grid">{"".join(card(x) for x in rel)}</div></div></section>'''
-    desc = f'{titulo}. ' + ('Hecha a mano en Medellín. ' if p['propio'] else f'Ref. {p["ref"]}. ') + 'Sin níquel, 5 años de garantía en el color. Pídela por WhatsApp con envío a toda Colombia.'
+    desc = f'{titulo}' + (f' por {cop(p["precio"])}. ' if p['precio'] else '. ') + ('Hecha a mano en Medellín. ' if p['propio'] else f'Ref. {p["ref"]}. ') + 'Sin níquel, 5 años de garantía. Envíos a toda Colombia.'
     og = gal[0] if gal[0].startswith('http') else '/assets/img/og-casa-orus.png'
-    write(f'/joya/{p["slug"]}/', head(f'{titulo} | Casa Orus', desc[:158], f'/joya/{p["slug"]}/', og_img=og, schema=sch, typ='product') + body + foot())
+    t = f'{titulo} | Casa Orus'
+    if DUP.get(p['nombre'], 0) > 1 and not p['propio']: t = f'{p["nombre"]} Ref. {p["ref"]} · Oro Laminado 18k | Casa Orus'
+    if len(t) > 68: t = f'{p["nombre"]}' + (f' Ref. {p["ref"]}' if DUP.get(p['nombre'], 0) > 1 else '') + ' | Casa Orus'
+    write(f'/joya/{p["slug"]}/', head(t, desc[:158], f'/joya/{p["slug"]}/', og_img=og, schema=sch, typ='product', precio=p['precio']) + body + foot())
 
 def pilares(oscuro=False):
     data = [('oro', 'Oro laminado', 'Belleza que perdura, brillo que hace historia.'), ('gema', 'Piedras naturales', 'Energía real, directamente de la naturaleza.'),
@@ -278,7 +308,7 @@ def page_home(P):
             'potentialAction': {'@type': 'SearchAction', 'target': DOM + '/coleccion/?q={q}', 'query-input': 'required name=q'}}, faq_schema(FAQ_GEN)]
     body = f'''<section class="hero noche"><div class="contenedor">
 <div><span class="eyebrow">Joyería en oro laminado 18k · Medellín</span>
-<h1>Joyería que <span>trasciende</span></h1>{sep()}
+<h1>Joyería en oro laminado <span>que trasciende</span></h1>{sep()}
 <p class="lead">Manillas tejidas a mano, cadenas, aretes y dijes en oro laminado 18k, sin níquel y con 5 años de garantía en el color. Más que joyas, creamos historias.</p>
 <div class="botones"><a class="btn btn-oro" href="/coleccion/">Ver colección</a><a class="btn btn-linea" href="{wa('Hola Casa Orus ✨ quiero asesoría para elegir una joya.')}" rel="noopener">{ICON['wa']} Escríbenos</a></div></div>
 <img class="hero-arte" src="/assets/img/logo-vertical-metal.svg" alt="" width="420" height="434" fetchpriority="high">
@@ -318,7 +348,7 @@ def page_home(P):
 def simple(path, title, desc, eyebrow, h1, content, schema=None, oscuro=False, noindex=False):
     items = [('Inicio', '/'), (re.sub('<.*?>', '', h1), None)]
     body = f'''<section class="cab-cat{' noche' if oscuro else ''}"><div class="contenedor">{migas(items)}<span class="eyebrow">{eyebrow}</span><h1>{h1}</h1></div></section>{content}'''
-    write(path, head(title, desc, path, schema=[bc_schema(items)] + (schema or []), noindex=noindex) + body + foot())
+    write(path, head(title, desc[:160], path, schema=[bc_schema(items)] + (schema or []), noindex=noindex) + body + foot())
 
 GUIAS = [
  ('como-saber-si-el-oro-laminado-es-bueno', 'Cómo saber si el oro laminado es bueno', 'Las 6 señales para reconocer una pieza de calidad antes de comprarla.',
@@ -502,6 +532,8 @@ def main():
     assets()
     page_home(P); page_coleccion(P); page_fe(P)
     for c in CATS: page_cat(c[0], [p for p in P if p['cat'] == c[0]])
+    import collections
+    DUP.update(collections.Counter(p['nombre'] for p in P))
     for p in P: page_producto(p, P)
     build_pages(P); seo_files(P)
     with open(os.path.join(OUT, 'assets', 'catalogo.json'), 'w', encoding='utf-8') as f:
