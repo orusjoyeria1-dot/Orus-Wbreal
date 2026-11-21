@@ -213,6 +213,10 @@ def build():
             p['tags'].append('manillas' if (p['propio'] or 'hilo' in p['nombre'].lower()) else 'pulseras')
     # piezas descontinuadas: el proveedor ya no las tiene en su catálogo detal
     prods = [p for p in prods if p['propio'] or p['precio']]
+    # ajuste de precio por categoría (nov 2026): +$10.000
+    AJUSTE = {'aretes': 10000, 'dijes': 10000, 'herrajes': 10000}
+    for p in prods:
+        if p['precio'] and p['cat'] in AJUSTE: p['precio'] += AJUSTE[p['cat']]
     slugs = [p['slug'] for p in prods]
     assert len(slugs) == len(set(slugs)), 'slugs duplicados'
     return prods
