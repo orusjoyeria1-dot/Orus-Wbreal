@@ -75,7 +75,7 @@ def head(title, desc, path, og_img='/assets/img/og-casa-orus.png', schema=None, 
 </head>
 <body>
 <a class="salto" href="#contenido">Saltar al contenido</a>
-<div class="barra"><span>Envíos a toda Colombia</span><span>5 años de garantía en el color</span><span>Pedidos por WhatsApp</span></div>
+<div class="barra envio-gratis" role="note" aria-label="Envío gratis a toda Colombia en todas tus compras"><div class="mq" aria-hidden="true"><div class="mq-pista"><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span></div><div class="mq-pista"><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span><span class="mq-item">{PICT['envio']}<b>ENVÍO GRATIS A TODA COLOMBIA</b><i>✦</i>En todas tus compras<i>✦</i></span></div></div></div>
 <header class="cabecera"><div class="contenedor">
 <a class="logo" href="/" aria-label="Casa Orus, inicio"><img src="/assets/img/logo-casa-orus.svg" alt="Casa Orus · Joyería que trasciende" width="180" height="52"></a>
 <nav class="nav" id="nav" aria-label="Principal"><ul class="menu">{''.join(f'<li><a href="{u}"{" aria-current=\"page\"" if u == path else ""}>{n}</a></li>' for n, u in NAV)}</ul></nav>
@@ -200,7 +200,7 @@ def page_cat(slug, prods):
 <p class="lead">{E(c[3])}{f", desde {cop(lo)}" if lo else ""}. Pide cualquier pieza por WhatsApp citando su referencia.</p></div></section>
 <section class="contenedor" style="padding-bottom:90px">{filtros}<p class="contador" id="contador" aria-live="polite"></p><div class="grid" id="lista">{grid}</div>
 <div class="texto-cat"><h2>{E(h2)}</h2>{txt}{('<h2 style="margin-top:40px">Preguntas frecuentes</h2>' + faq_html(faqs)) if faqs else ''}</div></section>'''
-    desc = c[5].replace('Envíos a toda Colombia.', f'Desde {cop(lo)}. Envíos a Colombia.') if lo else c[5]
+    desc = c[5].replace('Envíos a toda Colombia.', f'Desde {cop(lo)}. Envío gratis a toda Colombia.') if lo else c[5]
     write(f'/coleccion/{slug}/', head(c[4], desc[:160], f'/coleccion/{slug}/', schema=sch) + body + foot())
 
 def page_coleccion(P):
@@ -215,7 +215,7 @@ def page_coleccion(P):
 <form class="buscador" role="search" action="/coleccion/"><label class="salto" for="q">Buscar joyas</label><input id="q" name="q" type="search" placeholder="Busca: cubana, San Benito, topos, 45413…" autocomplete="off"><button class="btn btn-oro" type="submit">Buscar</button></form>
 <div class="filtros" role="group" aria-label="Filtrar por categoría"><button class="chip" type="button" data-f="todo" aria-pressed="true">Todas</button>{chips}<button class="chip" type="button" data-f="fe" aria-pressed="false">Fe y protección</button></div>
 {orden()}<p class="contador" id="contador" aria-live="polite"></p><div class="grid" id="lista">{grid}</div></section>'''
-    write('/coleccion/', head('Colección de Joyería en Oro Laminado 18k | Casa Orus Medellín', 'Más de 500 piezas en oro laminado 18k: manillas, cadenas, aretes, dijes, anillos y tobilleras. Pide por WhatsApp con envío a toda Colombia.', '/coleccion/', schema=[bc_schema(items)]) + body + foot())
+    write('/coleccion/', head('Colección de Joyería en Oro Laminado 18k | Casa Orus Medellín', 'Más de 500 piezas en oro laminado 18k: manillas, cadenas, aretes, dijes, anillos y tobilleras. Envío gratis a toda Colombia.', '/coleccion/', schema=[bc_schema(items)]) + body + foot())
 
 def cat_tile(c):
     img = CAT_IMG.get(c[0])
@@ -263,14 +263,14 @@ def page_producto(p, P):
 <p class="precio-ficha">{cop(p["precio"]) if p["precio"] else "Consultar precio"}{' <span>COP</span>' if p["precio"] else ""}</p>
 <p class="lead" style="font-size:17px">{E(p["desc"])}</p>{var}
 <div class="botones" style="margin-top:20px"><a class="btn btn-oro" href="{wa(msg)}" rel="noopener">{ICON["wa"]} Pedir por WhatsApp</a><a class="btn btn-linea" href="/coleccion/{p["cat"]}/">Ver más {E(c[2].lower())}</a></div>
-<p class="nota" style="margin-top:12px">Te confirmamos disponibilidad y envío por WhatsApp.</p>
+<p class="envio-ficha">{PICT['envio']}<span><b>Envío gratis</b> a toda Colombia</span></p><p class="nota" style="margin-top:12px">Te confirmamos disponibilidad por WhatsApp.</p>
 <ul class="datos">{"".join(f"<li><b>{E(k)}</b><span>{E(v)}</span></li>" for k, v in datos)}</ul>
 <details class="acord" open><summary>Garantía de 5 años</summary><p>Tu pieza está hecha en plata ley 925 con tres capas de oro 18k, libre de níquel e hipoalergénica. Cubrimos el cambio de color durante 5 años con uso adecuado. <a href="/garantia-y-cuidados/">Ver condiciones</a>.</p></details>
 <details class="acord"><summary>Cuidados</summary><ul><li>Quítatela para bañarte, nadar o hacer ejercicio.</li><li>Aplica perfume y cremas antes de ponértela.</li><li>Guárdala seca, en su bolsita o estuche.</li></ul></details>
-<details class="acord"><summary>Envíos</summary><p>Enviamos a toda Colombia. Coordina tu pedido por WhatsApp y te damos el valor y el tiempo de entrega según tu ciudad.</p></details>
+<details class="acord"><summary>Envíos</summary><p>El envío es <strong>gratis a toda Colombia</strong> en todas tus compras. Coordina tu pedido por WhatsApp y te confirmamos el tiempo de entrega según tu ciudad.</p></details>
 </div></article></div>
 <section class="seccion alt" style="padding:70px 0"><div class="contenedor"><h2 class="centro">También te puede gustar</h2>{sep().replace('class="sep"', 'class="sep" style="margin:14px auto 34px"')}<div class="grid">{"".join(card(x) for x in rel)}</div></div></section>'''
-    desc = f'{titulo}' + (f' por {cop(p["precio"])}. ' if p['precio'] else '. ') + ('Hecha a mano en Medellín. ' if p['propio'] else f'Ref. {p["ref"]}. ') + 'Sin níquel, 5 años de garantía. Envíos a toda Colombia.'
+    desc = f'{titulo}' + (f' por {cop(p["precio"])}. ' if p['precio'] else '. ') + ('Hecha a mano en Medellín. ' if p['propio'] else f'Ref. {p["ref"]}. ') + 'Sin níquel, 5 años de garantía. Envío gratis a toda Colombia.'
     og = gal[0] if gal[0].startswith('http') else '/assets/img/og-casa-orus.png'
     t = f'{titulo} | Casa Orus'
     if DUP.get(p['nombre'], 0) > 1 and not p['propio']: t = f'{p["nombre"]} Ref. {p["ref"]} · Oro Laminado 18k | Casa Orus'
@@ -292,8 +292,8 @@ FAQ_GEN = [
  ('¿Qué es el oro laminado?', 'Es una capa de oro real adherida a un metal base. En Casa Orus esa base es plata ley 925 cubierta con tres capas de oro 18k: el brillo del oro a un precio accesible y mucho más durable que un simple baño.'),
  ('¿El oro laminado se pone negro?', 'Con buen uso, no. Lo que lo opaca es el contacto frecuente con agua, perfume, cremas o químicos. Por eso damos 5 años de garantía en el color.'),
  ('¿Son hipoalergénicas?', 'Sí. No contienen níquel y su base es plata ley 925.'),
- ('¿Cómo hago un pedido?', 'Escríbenos por WhatsApp al +57 314 272 0023 con el nombre o la referencia de la pieza. Te confirmamos disponibilidad, precio y envío.'),
- ('¿Hacen envíos?', 'Sí, a toda Colombia. En Medellín coordinamos la entrega contigo.'),
+ ('¿Cómo hago un pedido?', 'Escríbenos por WhatsApp al +57 314 272 0023 con el nombre o la referencia de la pieza. Te confirmamos disponibilidad y el envío es gratis.'),
+ ('¿El envío tiene costo?', 'No. El envío es gratis a toda Colombia en todas tus compras. En Medellín también coordinamos la entrega contigo.'),
  ('¿Hacen piezas personalizadas?', 'Sí: placas con nombre, combinaciones de piedras y manillas a pedido. Cuéntanos tu idea por WhatsApp.'),
 ]
 
@@ -307,14 +307,15 @@ def page_home(P):
     sch = [ORG, {'@context': 'https://schema.org', '@type': 'WebSite', 'name': 'Casa Orus', 'url': DOM + '/', 'inLanguage': 'es-CO',
             'potentialAction': {'@type': 'SearchAction', 'target': DOM + '/coleccion/?q={q}', 'query-input': 'required name=q'}}, faq_schema(FAQ_GEN)]
     body = f'''<section class="hero noche"><div class="contenedor">
-<div><span class="eyebrow">Joyería en oro laminado 18k · Medellín</span>
+<div><a class="sello-envio" href="/coleccion/"><span class="sello-camion">{PICT['envio']}</span><span><b>Envío gratis</b> a toda Colombia</span></a>
+<span class="eyebrow">Joyería en oro laminado 18k · Medellín</span>
 <h1>Joyería en oro laminado <span>que trasciende</span></h1>{sep()}
 <p class="lead">Manillas tejidas a mano, cadenas, aretes y dijes en oro laminado 18k, sin níquel y con 5 años de garantía en el color. Más que joyas, creamos historias.</p>
 <div class="botones"><a class="btn btn-oro" href="/coleccion/">Ver colección</a><a class="btn btn-linea" href="{wa('Hola Casa Orus ✨ quiero asesoría para elegir una joya.')}" rel="noopener">{ICON['wa']} Escríbenos</a></div></div>
 <img class="hero-arte" src="/assets/img/logo-vertical-metal.svg" alt="" width="420" height="434" fetchpriority="high">
 </div></section>
 <section class="confianza" aria-label="Por qué Casa Orus"><div class="contenedor"><ul>
-<li>{PICT['mano']}Hecho a mano en Medellín</li><li>{PICT['oro']}Oro laminado 18k</li><li>{PICT['hoja']}Sin níquel, hipoalergénico</li><li>{PICT['escudo']}5 años de garantía</li></ul></div></section>
+<li>{PICT['mano']}Hecho a mano en Medellín</li><li>{PICT['oro']}Oro laminado 18k</li><li>{PICT['hoja']}Sin níquel, hipoalergénico</li><li>{PICT['escudo']}5 años de garantía</li><li class="conf-envio">{PICT['envio']}Envío gratis a toda Colombia</li></ul></div></section>
 <section class="seccion"><div class="contenedor centro"><span class="eyebrow">Explora</span><h2>Encuentra tu <span class="oro">pieza</span></h2>{sep()}
 <p class="lead">Más de {len(P) // 100 * 100} piezas en oro laminado 18k para cada estilo y cada historia.</p><div class="cats">{cats}</div>
 <div class="botones"><a class="btn btn-linea" href="/coleccion/">Ver toda la colección</a></div></div></section>
@@ -343,7 +344,7 @@ def page_home(P):
 <a class="btn btn-oro" href="/aliados/">Conocer la alianza</a></div></div></section>
 <section class="seccion noche"><div class="contenedor centro"><p class="cita">“Más que joyas, creamos historias.”</p>
 <div class="botones"><a class="btn btn-linea" href="{IG}" rel="noopener">{ICON['ig']} Síguenos en Instagram @casa.orus</a></div></div></section>'''
-    write('/', head('Casa Orus · Joyería en Oro Laminado 18k en Medellín', 'Joyería en oro laminado 18k hecha en Medellín: manillas tejidas a mano, cadenas, aretes y dijes. Sin níquel, 5 años de garantía. Pedidos por WhatsApp y envíos a Colombia.', '/', schema=sch) + body + foot())
+    write('/', head('Casa Orus · Joyería en Oro Laminado 18k en Medellín', 'Joyería en oro laminado 18k hecha en Medellín: manillas tejidas a mano, cadenas, aretes y dijes. Sin níquel, 5 años de garantía. Envío gratis a toda Colombia.', '/', schema=sch) + body + foot())
 
 def simple(path, title, desc, eyebrow, h1, content, schema=None, oscuro=False, noindex=False):
     items = [('Inicio', '/'), (re.sub('<.*?>', '', h1), None)]
@@ -476,7 +477,7 @@ def build_pages(P):
     # Contacto
     simple('/contacto/', 'Contacto · Casa Orus Joyería en Medellín', 'Escríbenos por WhatsApp al +57 314 272 0023, por Instagram @casa.orus o al correo orusjoyeria1@gmail.com. Atendemos pedidos en Medellín y toda Colombia.',
            'Hablemos', 'Estamos para <span class="oro">ayudarte</span>',
-           f'''<section class="contenedor" style="padding-bottom:90px"><p class="lead">Atendemos pedidos, asesoría para regalos y piezas personalizadas. Somos una joyería online con base en Medellín y enviamos a toda Colombia.</p>
+           f'''<section class="contenedor" style="padding-bottom:90px"><p class="lead">Atendemos pedidos, asesoría para regalos y piezas personalizadas. Somos una joyería online con base en Medellín y el envío es gratis a toda Colombia.</p>
 <div class="pilares" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
 <div class="pilar"><div class="medallon">{ICON['wa']}</div><h3>WhatsApp</h3><p><a href="{wa('Hola Casa Orus ✨')}" rel="noopener">+57 314 272 0023</a></p></div>
 <div class="pilar"><div class="medallon">{ICON['ig']}</div><h3>Instagram</h3><p><a href="{IG}" rel="noopener">@casa.orus</a></p></div>
@@ -577,7 +578,7 @@ def seo_files(P):
         extra = ''.join(f'<g:additional_image_link>{_h.escape(g if g.startswith("http") else DOM + g)}</g:additional_image_link>' for g in p.get('galeria', [])[1:6])
         it.append(f'<item><g:id>{_h.escape(p["ref"] if not p["propio"] else "CO-" + p["slug"])}</g:id><title>{_h.escape((p["nombre"] + " en oro laminado 18k")[:150])}</title>'
                   f'<description>{_h.escape(p["desc"])}</description><link>{DOM}/joya/{p["slug"]}/</link><g:image_link>{_h.escape(img)}</g:image_link>{extra}'
-                  f'<g:availability>in_stock</g:availability><g:condition>new</g:condition><g:price>{p["precio"]} COP</g:price><g:brand>Casa Orus</g:brand>'
+                  f'<g:availability>in_stock</g:availability><g:condition>new</g:condition><g:price>{p["precio"]} COP</g:price><g:shipping><g:country>CO</g:country><g:service>Envío gratis</g:service><g:price>0 COP</g:price></g:shipping><g:brand>Casa Orus</g:brand>'
                   f'<g:identifier_exists>no</g:identifier_exists><g:google_product_category>{_h.escape(CATG.get(p["cat"], "Apparel & Accessories > Jewelry"))}</g:google_product_category>'
                   f'<g:product_type>{_h.escape(p["cat"].replace("-", " ").capitalize())}</g:product_type><g:material>Oro laminado 18k</g:material><g:color>Dorado</g:color><g:adult>no</g:adult></item>')
     with open(os.path.join(OUT, 'feed-google.xml'), 'w', encoding='utf-8') as f:
