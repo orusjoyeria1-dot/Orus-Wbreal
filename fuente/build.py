@@ -70,7 +70,9 @@ def head(title, desc, path, og_img='/assets/img/og-casa-orus.png', schema=None, 
 <link rel="preconnect" href="https://belatrizcolombia.com">
 <link rel="stylesheet" href="/assets/css/estilos.css?v={HOY}">
 <!-- Google Search Console: pega aquí la etiqueta de verificación -->
-<!-- Google Analytics 4: pega aquí el fragmento gtag con tu ID G-XXXXXXX -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S0NSFPG255"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-S0NSFPG255');
+document.addEventListener('click',function(e){{var a=e.target.closest&&e.target.closest('a[href*="wa.me"]');if(a)gtag('event','contacto_whatsapp',{{link_url:a.href,page_path:location.pathname}});}});</script>
 {sch}
 </head>
 <body>
