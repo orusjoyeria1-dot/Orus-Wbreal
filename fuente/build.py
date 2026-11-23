@@ -264,8 +264,8 @@ def page_producto(p, P):
 <div><span class="eyebrow">{"Creación Casa Orus" if p["propio"] else c[1]}</span><h1>{E(p["nombre"])} <span class="oro">en oro laminado 18k</span></h1>
 <p class="precio-ficha">{cop(p["precio"]) if p["precio"] else "Consultar precio"}{' <span>COP</span>' if p["precio"] else ""}</p>
 <p class="lead" style="font-size:17px">{E(p["desc"])}</p>{var}
-<div class="botones" style="margin-top:20px"><a class="btn btn-oro" href="{wa(msg)}" rel="noopener">{ICON["wa"]} Pedir por WhatsApp</a><a class="btn btn-linea" href="/coleccion/{p["cat"]}/">Ver más {E(c[2].lower())}</a></div>
-<p class="envio-ficha">{PICT['envio']}<span><b>Envío gratis</b> a toda Colombia</span></p><p class="nota" style="margin-top:12px">Te confirmamos disponibilidad por WhatsApp.</p>
+<div class="botones" style="margin-top:20px">{('<a class="btn btn-oro btn-comprar" href="/pagar/?p=' + p["slug"] + '" rel="nofollow">Comprar ahora</a><a class="btn btn-linea" href="' + wa(msg) + '" rel="noopener">' + ICON["wa"] + ' Pedir por WhatsApp</a>') if p["precio"] else ('<a class="btn btn-oro" href="' + wa(msg) + '" rel="noopener">' + ICON["wa"] + ' Pedir por WhatsApp</a>')}</div><p class="nota" style="margin-top:10px">Paga con tarjeta, PSE, Nequi o Daviplata · <a href="/coleccion/{p["cat"]}/">Ver más {E(c[2].lower())}</a></p>
+<p class="envio-ficha">{PICT['envio']}<span><b>Envío gratis</b> a toda Colombia</span></p>
 <ul class="datos">{"".join(f"<li><b>{E(k)}</b><span>{E(v)}</span></li>" for k, v in datos)}</ul>
 <details class="acord" open><summary>Garantía de 5 años</summary><p>Tu pieza está hecha en plata ley 925 con tres capas de oro 18k, libre de níquel e hipoalergénica. Cubrimos el cambio de color durante 5 años con uso adecuado. <a href="/garantia-y-cuidados/">Ver condiciones</a>.</p></details>
 <details class="acord"><summary>Cuidados</summary><ul><li>Quítatela para bañarte, nadar o hacer ejercicio.</li><li>Aplica perfume y cremas antes de ponértela.</li><li>Guárdala seca, en su bolsita o estuche.</li></ul></details>
@@ -540,7 +540,7 @@ def seo_files(P):
         xml.append(f'<url><loc>{DOM}/joya/{p["slug"]}/</loc><lastmod>{HOY}</lastmod><priority>0.6</priority><image:image><image:loc>{E(p["img"])}</image:loc></image:image></url>')
     xml.append('</urlset>')
     with open(os.path.join(OUT, 'sitemap.xml'), 'w', encoding='utf-8') as f: f.write('\n'.join(xml))
-    with open(os.path.join(OUT, 'robots.txt'), 'w') as f: f.write(f'User-agent: *\nAllow: /\nDisallow: /404.html\n\nSitemap: {DOM}/sitemap.xml\n')
+    with open(os.path.join(OUT, 'robots.txt'), 'w') as f: f.write(f'User-agent: *\nAllow: /\nDisallow: /404.html\nDisallow: /pagar/\nDisallow: /gracias/\n\nSitemap: {DOM}/sitemap.xml\n')
     # redirecciones desde la web anterior
     old = {'/shop': '/coleccion/', '/collection': '/coleccion/', '/gallery': '/creaciones/', '/about': '/nuestra-historia/', '/contact': '/contacto/',
            '/shop/manillas': '/coleccion/manillas-y-pulseras/', '/shop/cadenas': '/coleccion/cadenas-y-gargantillas/', '/shop/aretes': '/coleccion/aretes/', '/shop/anillos': '/coleccion/anillos/', '/shop/otros': '/coleccion/',
@@ -551,7 +551,7 @@ def seo_files(P):
                'face-serum-gxrcld': 'manilla-divino-nino', 'handmade-vase-slowpy': 'manilla-balin-liso-4mm', 'set-of-plates-cxlzwx': 'manilla-lotus', 'sunglasses-iubjnq': 'manilla-san-benito'}
     by_ref = {p['ref']: p['slug'] for p in P}
     resold = {'anillo-alianza-t55': '13009-T5.5', 'anillo-flicker-ajustable': '13102'}
-    lines = ['# Casa Orus · configuración Apache (Hostinger)', 'Options -Indexes', 'DirectoryIndex index.html', 'ErrorDocument 404 /404.html', '',
+    lines = ['# Casa Orus · configuración Apache (Hostinger)', 'Options -Indexes', 'DirectoryIndex index.html index.php', 'ErrorDocument 404 /404.html', '',
              'RewriteEngine On', '# Forzar HTTPS y dominio sin www', 'RewriteCond %{HTTPS} off [OR]', 'RewriteCond %{HTTP_HOST} ^www\\. [NC]',
              'RewriteRule ^(.*)$ https://orusjoyeria.com/$1 [L,R=301]', '', '# Redirecciones de la web anterior']
     for a, b in old.items(): lines.append(f'Redirect 301 {a} {DOM}{b}')
@@ -602,6 +602,7 @@ def main():
     DUP.update(collections.Counter(p['nombre'] for p in P))
     for p in P: page_producto(p, P)
     build_pages(P); seo_files(P)
+    import pagos_bold; pagos_bold.construir(OUT, P, head, foot)
     with open(os.path.join(OUT, 'assets', 'catalogo.json'), 'w', encoding='utf-8') as f:
         json.dump([{k: p[k] for k in ('ref', 'nombre', 'cat', 'slug', 'img', 'tags', 'propio')} for p in P], f, ensure_ascii=False)
     n = sum(len(fs) for _, _, fs in os.walk(OUT))

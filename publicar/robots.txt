@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /404.html
+Disallow: /pagar/
+Disallow: /gracias/
 
 Sitemap: https://orusjoyeria.com/sitemap.xml

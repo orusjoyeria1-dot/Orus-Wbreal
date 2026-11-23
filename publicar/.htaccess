@@ -1,6 +1,6 @@
 # Casa Orus · configuración Apache (Hostinger)
 Options -Indexes
-DirectoryIndex index.html
+DirectoryIndex index.html index.php
 ErrorDocument 404 /404.html
 
 RewriteEngine On
