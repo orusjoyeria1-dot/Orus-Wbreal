@@ -216,7 +216,7 @@ def build():
     # ajuste de precio por categoría (nov 2026): +$10.000
     AJUSTE = {'aretes': 10000, 'dijes': 10000, 'herrajes': 10000}
     for p in prods:
-        if p['precio'] and p['cat'] in AJUSTE: p['precio'] += AJUSTE[p['cat']]
+        if p['precio']: p['precio'] += AJUSTE.get(p['cat'], 15000)  # resto del catálogo: +$15.000
     slugs = [p['slug'] for p in prods]
     assert len(slugs) == len(set(slugs)), 'slugs duplicados'
     return prods
